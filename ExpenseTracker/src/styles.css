@@ -51,6 +51,9 @@ button:hover {
     display: flex; /* Flexbox for alignment */
     flex-direction: column; /* Stack inputs vertically */
     margin-bottom: 20px; /* Space below */
+    background-color: #363636;
+    padding: 20px;
+    border-radius: 20px;
 }
   
 input[type='date'],
@@ -115,20 +118,31 @@ input[type='text'] {
     border-radius: 5px; /* Rounded corners */
 }
   
-.transaction-list li {
-    list-style-type: none; /* Remove bullet points */
-    padding: 10px; /* Add padding */
-    border-radius: 20px;
-    border-bottom: 1px solid #ddd; /* Light bottom border */
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    font-weight: 400;
+  }
+  
+.transaction-item.income {
+    border-bottom: 2px solid green;
 }
   
-.transaction-list li:last-child {
-    border-bottom: none; /* Remove bottom border for the last item */
+.transaction-item.expense {
+    border-bottom: 2px solid red;
+}
+  
+.transaction-list ul {
+    list-style-type: none;
+    padding: 0;
 }
 
 .transaction-history{
-        background-color:#363636;
-        border-radius: 20px;
+    background-color:#363636;
+    border-radius: 20px;
 }
   
 label {
