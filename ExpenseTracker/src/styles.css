@@ -1,0 +1,140 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+
+body{
+    background-color: #E8CBA3;
+}
+.app-container {
+    max-width: 600px; /* Set a maximum width for the app */
+    margin: 20px auto; /* Center the container */
+    padding: 20px; /* Add padding inside the container */
+    background-color: #191919; /* Light background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+  
+h1 {
+    text-align: center; /* Center the heading */
+    color: #E8CBA3; /* Dark blue color */
+    
+}
+  
+.top-info {
+    display: flex; /* Flexbox for horizontal alignment */
+    justify-content: space-between; /* Space between elements */
+    align-items: center; /* Center vertically */
+    margin-bottom: 20px; /* Space below */
+}
+  
+button {
+    padding: 10px 20px; /* Add padding for button */
+    background-color: transparent; /* Button background color */
+    color: white; /* Button text color */
+    border: solid 5px; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-color: #363636;
+    transition: background-color 0.3s; /* Smooth transition */
+    font-size: 16px;
+    font-weight: bold;
+}
+  
+button:hover {
+    background-color: #363636; /* Darker shade on hover */
+}
+  
+.New-Transaction {
+    display: flex; /* Flexbox for alignment */
+    flex-direction: column; /* Stack inputs vertically */
+    margin-bottom: 20px; /* Space below */
+}
+  
+input[type='date'],
+input[type='number'],
+input[type='text'] {
+    padding: 10px; /* Add padding to inputs */
+    margin-bottom: 10px; /* Space between inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+}
+
+.typeTransaction{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+  
+.money-info {
+    display: flex; /* Flexbox for alignment */
+    justify-content: space-evenly; /* Space between items */
+    gap: 100px;
+    margin: 20px 0; /* Space above and below */
+    color: white;
+}
+
+.money-info p{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.money-info span{
+    font-size: 18px;
+}
+
+.expense{
+    background-color: #363636;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.income{
+    background-color: #363636;
+    padding: 20px;
+    border-radius: 20px;
+}
+  
+.transaction-list {
+    margin-top: 20px; /* Space above */
+}
+
+.searchbar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.transaction-list input {
+    padding: 10px; /* Add padding to the search input */
+    width: 100%;
+    margin-bottom: 10px; /* Space below */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+}
+  
+.transaction-list li {
+    list-style-type: none; /* Remove bullet points */
+    padding: 10px; /* Add padding */
+    border-radius: 20px;
+    border-bottom: 1px solid #ddd; /* Light bottom border */
+}
+  
+.transaction-list li:last-child {
+    border-bottom: none; /* Remove bottom border for the last item */
+}
+
+.transaction-history{
+        background-color:#363636;
+        border-radius: 20px;
+}
+  
+label {
+    margin-left: 5px; /* Space between label and radio button */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
