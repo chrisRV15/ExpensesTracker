@@ -1,7 +1,27 @@
 import { useState, useEffect } from 'react'
 import './styles.css'
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyADpKILRtkEsk0DCaCppqSK_BzTALupV6Q",
+  authDomain: "expensetracker-4255c.firebaseapp.com",
+  projectId: "expensetracker-4255c",
+  storageBucket: "expensetracker-4255c.appspot.com",
+  messagingSenderId: "914204917667",
+  appId: "1:914204917667:web:c0fe422982c483d4aea416",
+  measurementId: "G-7YYRFLKE3S"
+}
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app)
+export const db = getFirestore(app)
 
 export default function myAPP(){
+  const [user] = useAuthState(auth)
+  const provider = new GoogleAuthProvider()
   const [balance, setBalance] = useState(0)
   const [expense, setExpense] = useState(0)
   const [income, setIncome] = useState(0)
@@ -11,6 +31,21 @@ export default function myAPP(){
   const [history, setHistory] = useState([])
   const [isIncome, setIsIncome] = useState(false) 
   const [isExpense, setIsExpense] = useState(true)
+
+
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => console.log("User signed in: ", result.user))
+      .catch((error) => console.error("Error signing in: ",error))
+  };
+
+  const signOutUser = () => {
+    signOut(auth)
+      .then(() => console.log("User signed out"))
+      .catch((error) => console.error("Error signing out: ", error))
+  };
+
+
 
   const handleNewTransaction = (e) =>{
     e.preventDefault();
@@ -43,6 +78,8 @@ export default function myAPP(){
     setIsIncome(false);
     setIsExpense(false);
 
+
+
   };
 
   useEffect(() => {
@@ -52,55 +89,85 @@ export default function myAPP(){
 
   return (
     <>
-    <div className='app-container'>
-      <h1>Expense Tracker</h1>
-      <div className='top-info'>
-        <h1>Balance: ${balance}</h1>
-        <button onClick={handleNewTransaction}>New Transaction</button>
-      </div>
+    {user ? (
+    <div>
+      <p className='welcomeUser'>Welcome, {user.displayName}</p>
+      <button className='signOut' onClick={signOutUser}>Sign Out</button>
+      <div className='app-container'>
+        <h1>Expense Tracker</h1>
+        {/* Balance Display and New Transaction Button */}
+        <div className='top-info'>
+          <h1>Balance: ${balance}</h1>
+          <button onClick={handleNewTransaction}>New Transaction</button>
+        </div>
 
-      <div className='New-Transaction'>
-        <input type='date' placeholder='date..' value={date} onChange={(e) => setDate(e.target.value)}/>
-        <input type='number' placeholder='Amount' value={amount} onChange={(e) => setAmount(e.target.value)}/>
-        <input type='text' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)}/>
+        {/* New Transaction Form */}
+        <div className='New-Transaction'>
+          <input type='date' placeholder='date..' value={date} onChange={(e) => setDate(e.target.value)} />
+          <input type='number' placeholder='Amount' value={amount} onChange={(e) => setAmount(e.target.value)} />
+          <input type='text' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
+          
           <div className='typeTransaction'>
-            <input type="radio" id='expense' name='transaction-type' checked={isExpense} onChange={() => {setIsExpense(true); setIsIncome(false); }}/>
-              <label for='expense'>Expense</label>
-            <input type="radio" id='income' name='transaction-type' checked={isIncome} onChange={() => { setIsIncome(true); setIsExpense(false); }}/>
-              <label for='income'>Income</label>
-          </div>  
-      </div>
+            <input
+              type="radio"
+              id='expense'
+              name='transaction-type'
+              checked={isExpense}
+              onChange={() => { setIsExpense(true); setIsIncome(false); }}
+            />
+            <label htmlFor='expense'>Expense</label>
 
-      <div className='money-info'>
-        <div className='expense'>
-          <p>Expenses:</p>
-          <span>${expense}</span>
+            <input
+              type="radio"
+              id='income'
+              name='transaction-type'
+              checked={isIncome}
+              onChange={() => { setIsIncome(true); setIsExpense(false); }}
+            />
+            <label htmlFor='income'>Income</label>
+          </div>
         </div>
-        <div className='income'>
-          <p>Income:</p>
-          <span>${income}</span>
+
+        {/* Income and Expense Totals */}
+        <div className='money-info'>
+          <div className='expense'>
+            <p>Expenses:</p>
+            <span>${expense}</span>
+          </div>
+          <div className='income'>
+            <p>Income:</p>
+            <span>${income}</span>
+          </div>
+        </div>
+
+        {/* Transaction History Section */}
+        <div className='transaction-list'>
+          <div className='searchbar-container'>
+            <input type='text' placeholder='Search Transaction' />
+          </div>
+
+          <div className='transaction-history'>
+            <ul>
+              {history.map((transaction, index) => (
+                <li
+                  key={index}
+                  className={`transaction-item ${transaction.type === 'Income' ? 'income' : 'expense'}`}
+                >
+                  <span>{transaction.date}</span> {/* Date */}
+                  <span>{transaction.description}</span> {/* Description */}
+                  <span>{transaction.type === 'Income' ? `+${transaction.amount}` : `-${transaction.amount}`}</span> {/* Amount */}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-
-      <div className='transaction-list'>
-        <div className='searchbar-container'>
-          <input type='text' placeholder='Search Transaction'/>
-        </div>
-        <div className='transaction-history'>
-        <ul>
-          {history.map((transaction, index) => (
-            <li key={index} className={`transaction-item ${transaction.type === 'Income' ? 'income' : 'expense'}`}>
-              <span>{transaction.date}</span> {/* Date */}
-              <span>{transaction.description}</span> {/* Description */}
-              <span>{transaction.type === 'Income' ? `+${transaction.amount}` : `-${transaction.amount}`}</span> {/* Amount */}
-            </li>
-          ))}
-        </ul>
-        </div>  
-      </div>
-
-
-    </div> 
+    </div>
+        ) : (
+          <div className='signIn'>
+            <button onClick={signInWithGoogle}>Sign In With Google</button>
+          </div>
+        )}
     </>
   )
 }

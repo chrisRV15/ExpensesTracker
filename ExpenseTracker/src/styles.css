@@ -144,6 +144,29 @@ input[type='text'] {
     background-color:#363636;
     border-radius: 20px;
 }
+
+.signIn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 250px;
+}
+
+.welcomeUser{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.signOut{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
   
 label {
     margin-left: 5px; /* Space between label and radio button */
