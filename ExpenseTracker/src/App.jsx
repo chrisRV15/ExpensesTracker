@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import './styles.css'
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
+import { getDoc, getFirestore } from 'firebase/firestore'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import {collection, addDoc, getDocs} from 'firebase/firestore'
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyADpKILRtkEsk0DCaCppqSK_BzTALupV6Q",
@@ -19,6 +22,8 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app)
 export const db = getFirestore(app)
 
+
+
 export default function myAPP(){
   const [user] = useAuthState(auth)
   const provider = new GoogleAuthProvider()
@@ -31,6 +36,7 @@ export default function myAPP(){
   const [history, setHistory] = useState([])
   const [isIncome, setIsIncome] = useState(false) 
   const [isExpense, setIsExpense] = useState(true)
+  const [transaction, setTransactions] = useState([])
 
 
   const signInWithGoogle = () => {
@@ -45,6 +51,53 @@ export default function myAPP(){
       .catch((error) => console.error("Error signing out: ", error))
   };
 
+  async function addTransactionToFirestore(transaction) {
+    if(!user) return;
+  
+    try{
+      const transactionRef = collection(db, 'users', user.uid, 'transaction');
+      await addDoc(transactionRef, transaction);
+      console.log("Transaction added to Firestore");
+    }catch (error) {
+      console.error("Error adding transaction: ", error);
+    }
+  }
+
+  const loadTransaction  = async () => {
+    if(user) {
+      const transactionsRef = collection(db, "users", user.uid, "transaction");
+      const transactionsSnapshot = await getDocs(transactionsRef);
+      const transactionData = transactionsSnapshot.docs.map(doc =>({ id: doc.id, ...doc.data() }));
+       
+      setHistory(transactionData);
+      let totalBalance = 0;
+      let totalIncome = 0;
+      let totalExpense = 0;
+
+
+    
+      transactionData.forEach(transaction => {
+        if (transaction.type === 'Income') {
+          totalIncome += transaction.amount;
+          totalBalance += transaction.amount;
+          
+        } else if (transaction.type === 'Expense') {
+          totalExpense += transaction.amount;
+          totalBalance -= transaction.amount;
+          
+        }
+      });
+
+      
+      setIncome(totalIncome);
+      setExpense(totalExpense);
+      setBalance(totalBalance);
+    }
+    }
+
+  
+
+  
 
 
   const handleNewTransaction = (e) =>{
@@ -63,6 +116,7 @@ export default function myAPP(){
     };
 
     setHistory([...history, newTransaction]);
+    addTransactionToFirestore(newTransaction);
 
     if (isExpense) {
       setExpense(expense + Number(amount));
@@ -82,9 +136,12 @@ export default function myAPP(){
 
   };
 
+
   useEffect(() => {
-    console.log('Updated history:', history);
-  }, [history]);
+    if (user) {
+      loadTransaction();
+    }
+  }, [user]);
 
 
   return (
@@ -165,6 +222,7 @@ export default function myAPP(){
     </div>
         ) : (
           <div className='signIn'>
+            <h1>Expense Tracker</h1>
             <button onClick={signInWithGoogle}>Sign In With Google</button>
           </div>
         )}

@@ -9,48 +9,48 @@ body{
     background-color: #E8CBA3;
 }
 .app-container {
-    max-width: 600px; /* Set a maximum width for the app */
-    margin: 20px auto; /* Center the container */
-    padding: 20px; /* Add padding inside the container */
-    background-color: #191919; /* Light background color */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 600px; 
+    margin: 20px auto; 
+    padding: 20px; 
+    background-color: #191919; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
 }
   
 h1 {
-    text-align: center; /* Center the heading */
-    color: #E8CBA3; /* Dark blue color */
+    text-align: center;
+    color: #E8CBA3; 
     
 }
   
 .top-info {
-    display: flex; /* Flexbox for horizontal alignment */
-    justify-content: space-between; /* Space between elements */
-    align-items: center; /* Center vertically */
-    margin-bottom: 20px; /* Space below */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px; 
 }
   
 button {
-    padding: 10px 20px; /* Add padding for button */
-    background-color: transparent; /* Button background color */
-    color: white; /* Button text color */
-    border: solid 5px; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
+    padding: 10px 20px; 
+    background-color: transparent; 
+    color: white; 
+    border: solid 5px; 
+    border-radius: 5px; 
+    cursor: pointer; 
     border-color: #363636;
-    transition: background-color 0.3s; /* Smooth transition */
+    transition: background-color 0.3s; 
     font-size: 16px;
     font-weight: bold;
 }
   
 button:hover {
-    background-color: #363636; /* Darker shade on hover */
+    background-color: #363636; 
 }
   
 .New-Transaction {
-    display: flex; /* Flexbox for alignment */
-    flex-direction: column; /* Stack inputs vertically */
-    margin-bottom: 20px; /* Space below */
+    display: flex; 
+    flex-direction: column; 
+    margin-bottom: 20px; 
     background-color: #363636;
     padding: 20px;
     border-radius: 20px;
@@ -59,10 +59,10 @@ button:hover {
 input[type='date'],
 input[type='number'],
 input[type='text'] {
-    padding: 10px; /* Add padding to inputs */
-    margin-bottom: 10px; /* Space between inputs */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 5px; /* Rounded corners */
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
 }
 
 .typeTransaction{
@@ -72,10 +72,10 @@ input[type='text'] {
 }
   
 .money-info {
-    display: flex; /* Flexbox for alignment */
-    justify-content: space-evenly; /* Space between items */
+    display: flex; 
+    justify-content: space-evenly; 
     gap: 100px;
-    margin: 20px 0; /* Space above and below */
+    margin: 20px 0;
     color: white;
 }
 
@@ -101,7 +101,7 @@ input[type='text'] {
 }
   
 .transaction-list {
-    margin-top: 20px; /* Space above */
+    margin-top: 20px;
 }
 
 .searchbar-container {
@@ -111,11 +111,11 @@ input[type='text'] {
 }
   
 .transaction-list input {
-    padding: 10px; /* Add padding to the search input */
+    padding: 10px; 
     width: 100%;
-    margin-bottom: 10px; /* Space below */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
 }
   
 .transaction-item {
@@ -159,6 +159,7 @@ input[type='text'] {
     font-size: 30px;
     font-weight: bold;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .signOut{
@@ -167,9 +168,18 @@ input[type='text'] {
     justify-content: center;
     margin: auto;
 }
+
+.signIn h1{
+    color: #191919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    margin-top: 100px;
+}
   
 label {
-    margin-left: 5px; /* Space between label and radio button */
+    margin-left: 5px; 
     color: white;
     font-size: 18px;
     font-weight: bold;
