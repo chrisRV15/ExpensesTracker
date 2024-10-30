@@ -36,7 +36,7 @@ export default function myAPP(){
   const [history, setHistory] = useState([])
   const [isIncome, setIsIncome] = useState(false) 
   const [isExpense, setIsExpense] = useState(true)
-  const [transaction, setTransactions] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
 
 
   const signInWithGoogle = () => {
@@ -95,10 +95,6 @@ export default function myAPP(){
     }
     }
 
-  
-
-  
-
 
   const handleNewTransaction = (e) =>{
     e.preventDefault();
@@ -135,6 +131,12 @@ export default function myAPP(){
 
 
   };
+
+  const filteredHistory = history.filter(transaction => 
+    transaction.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    transaction.amount.toString().includes(searchTerm) ||
+    transaction.type.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
 
   useEffect(() => {
@@ -200,12 +202,12 @@ export default function myAPP(){
         {/* Transaction History Section */}
         <div className='transaction-list'>
           <div className='searchbar-container'>
-            <input type='text' placeholder='Search Transaction' />
+            <input type='text' placeholder='Search Transaction' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
           </div>
 
           <div className='transaction-history'>
             <ul>
-              {history.map((transaction, index) => (
+              {filteredHistory.map((transaction, index) => (
                 <li
                   key={index}
                   className={`transaction-item ${transaction.type === 'Income' ? 'income' : 'expense'}`}
